@@ -1,30 +1,4 @@
-
-```markdown
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloudy LoL Stats API Documentation</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"; line-height: 1.6; color: #333; max-width: 960px; margin: 0 auto; padding: 20px; }
-        h1, h2, h3 { border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
-        code { background-color: #f6f8fa; padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; }
-        pre code { display: block; padding: 16px; overflow: auto; line-height: 1.45; background-color: #f6f8fa; border-radius: 3px; }
-        table { border-collapse: collapse; width: 100%; margin-bottom: 16px; }
-        th, td { border: 1px solid #dfe2e5; padding: 6px 13px; }
-        th { font-weight: 600; }
-        .endpoint { background-color: #f1f1f1; padding: 10px; border-radius: 5px; margin: 20px 0; }
-        .endpoint-method { font-weight: bold; color: #fff; padding: 3px 8px; border-radius: 3px; margin-right: 10px; }
-        .get { background-color: #4CAF50; }
-        .endpoint-path { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; font-size: 1.1em; }
-        details { background: #fafafa; border: 1px solid #eee; border-radius: 5px; margin-top: 10px; }
-        summary { cursor: pointer; padding: 10px; font-weight: bold; }
-    </style>
-</head>
-<body>
-
-# Cloudy LoL Stats API Documentation
+Cloudy LoL Stats API Documentation
 
 Welcome to the official documentation for the **Cloudy LoL Stats API**. This API provides comprehensive, detailed statistics from professional League of Legends matches.
 
@@ -32,7 +6,7 @@ The API is designed to be simple, accessible, and powerful, allowing developers 
 
 ---
 
-## <a name="table-of-contents"></a>Table of Contents
+## Table of Contents
 
 - [Getting Started](#getting-started)
   - [Base URL](#base-url)
@@ -51,41 +25,38 @@ The API is designed to be simple, accessible, and powerful, allowing developers 
 
 ---
 
-## <a name="getting-started"></a>Getting Started
+## Getting Started
 
-### <a name="base-url"></a>Base URL
+### Base URL
 
 All API endpoints are relative to the following base URL:
 
-`https://cloudylol-api.up.railway.app`
+```
+https://cloudylol-api.up.railway.app
+```
 
-### <a name="authentication"></a>Authentication
+### Authentication
 
 The Cloudy LoL Stats API is completely open and **does not require an API key** or any form of authentication. You can start making requests right away. Please use the API responsibly to ensure it remains available for everyone.
 
 ---
 
-## <a name="endpoints"></a>Endpoints
+## Endpoints
 
-### <a name="metadata"></a>Metadata
+### Metadata
 
-#### <a name="get-metadata"></a>Get Metadata
+#### Get Metadata
 
 Returns aggregated information about the data available in the API, such as lists of all available leagues, years, teams, and total entity counts. This is useful for populating filter options in a user interface.
 
-<div class="endpoint">
-    <span class="endpoint-method get">GET</span>
-    <span class="endpoint-path">/stats/metadata</span>
-</div>
+`GET /stats/metadata`
 
 **Example Request (cURL):**
 ```bash
 curl --location 'https://cloudylol-api.up.railway.app/stats/metadata'
 ```
 
-<details>
-<summary>Example Response (200 OK)</summary>
-
+**Example Response (200 OK):**
 ```json
 {
   "leagues": [
@@ -104,44 +75,38 @@ curl --location 'https://cloudylol-api.up.railway.app/stats/metadata'
   "championCount": 167
 }
 ```
-</details>
 
 ---
 
-### <a name="champions"></a>Champions
+### Champions
 
-#### <a name="query-champion-statistics"></a>Query Champion Statistics
+#### Query Champion Statistics
 
 Returns a list of aggregated statistics for champions. This endpoint is highly flexible and can be filtered by numerous parameters, including direct champion matchups.
 
-<div class="endpoint">
-    <span class="endpoint-method get">GET</span>
-    <span class="endpoint-path">/stats/champions</span>
-</div>
+`GET /stats/champions`
 
 **Query Parameters:**
 
-| Name         | Type   | Required | Description                                                                                                   |
-| :----------- | :----- | :------- | :------------------------------------------------------------------------------------------------------------ |
-| `champion`   | string | No       | Exact champion name (case-insensitive). Example: `Azir`.                                                      |
-| `vsChampion` | string | No       | Filters stats against a specific opponent champion. Requires the `champion` parameter to also be provided.    |
-| `position`   | string | No       | The champion's role. Possible values: `Top`, `Jungle`, `Mid`, `ADC`, `Support`.                               |
-| `league`     | string | No       | League abbreviation. Example: `LEC`.                                                                          |
-| `year`       | number | No       | The season year. Example: `2024`.                                                                             |
-| `split`      | string | No       | The season split. Example: `Spring`.                                                                          |
-| `team`       | string | No       | Filters by matches played by a specific team. Example: `T1`.                                                  |
-| `player`     | string | No       | Filters by matches played by a specific player. Example: `Faker`.                                             |
-| `startDate`  | string | No       | Start date for the data range in `YYYY-MM-DD` format.                                                         |
-| `endDate`    | string | No       | End date for the data range in `YYYY-MM-DD` format.                                                           |
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `champion` | string | No | Exact champion name (case-insensitive). Example: `Azir`. |
+| `vsChampion` | string | No | Filters stats against a specific opponent champion. Requires the `champion` parameter to also be provided. |
+| `position` | string | No | The champion's role. Possible values: `Top`, `Jungle`, `Mid`, `ADC`, `Support`. |
+| `league` | string | No | League abbreviation. Example: `LEC`. |
+| `year` | number | No | The season year. Example: `2024`. |
+| `split` | string | No | The season split. Example: `Spring`. |
+| `team` | string | No | Filters by matches played by a specific team. Example: `T1`. |
+| `player` | string | No | Filters by matches played by a specific player. Example: `Faker`. |
+| `startDate` | string | No | Start date for the data range in `YYYY-MM-DD` format. |
+| `endDate` | string | No | End date for the data range in `YYYY-MM-DD` format. |
 
 **Example Request (Specific Matchup):**
 ```bash
 curl --location 'https://cloudylol-api.up.railway.app/stats/champions?champion=Azir&vsChampion=Orianna&position=Mid'
 ```
 
-<details>
-<summary>Example Response (200 OK)</summary>
-
+**Example Response (200 OK):**
 ```json
 [
   {
@@ -175,43 +140,37 @@ curl --location 'https://cloudylol-api.up.railway.app/stats/champions?champion=A
   }
 ]
 ```
-</details>
 
 ---
 
-### <a name="matches"></a>Matches
+### Matches
 
-#### <a name="find-matches"></a>Find Matches
+#### Find Matches
 
 Searches for a list of match summaries based on a variety of filters. Use the `team` parameter twice to find head-to-head results between two teams.
 
-<div class="endpoint">
-    <span class="endpoint-method get">GET</span>
-    <span class="endpoint-path">/stats/matches</span>
-</div>
+`GET /stats/matches`
 
 **Query Parameters:**
 
-| Name        | Type           | Required | Description                                                                                    |
-| :---------- | :------------- | :------- | :--------------------------------------------------------------------------------------------- |
-| `team`      | string or array | No       | Provide one team name to see its matches, or two team names for head-to-head matchups.         |
-| `player`    | string         | No       | Player name involved in the match.                                                             |
-| `champion`  | string         | No       | Champion name played in the match.                                                             |
-| `league`    | string         | No       | League abbreviation.                                                                           |
-| `year`      | number         | No       | The season year.                                                                               |
-| `split`     | string         | No       | The season split.                                                                              |
-| `startDate` | string         | No       | Start date in `YYYY-MM-DD` format.                                                             |
-| `endDate`   | string         | No       | End date in `YYYY-MM-DD` format.                                                               |
-| `limit`     | number         | No       | Maximum number of matches to return. Default: 50, Max: 200.                                    |
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `team` | string or array | No | Provide one team name to see its matches, or two team names for head-to-head matchups. |
+| `player` | string | No | Player name involved in the match. |
+| `champion` | string | No | Champion name played in the match. |
+| `league` | string | No | League abbreviation. |
+| `year` | number | No | The season year. |
+| `split` | string | No | The season split. |
+| `startDate` | string | No | Start date in `YYYY-MM-DD` format. |
+| `endDate` | string | No | End date in `YYYY-MM-DD` format. |
+| `limit` | number | No | Maximum number of matches to return. Default: 50, Max: 200. |
 
 **Example Request (Head-to-Head):**
 ```bash
 curl --location 'https://cloudylol-api.up.railway.app/stats/matches?team=G2%20Esports&team=Fnatic'
 ```
 
-<details>
-<summary>Example Response (200 OK)</summary>
-
+**Example Response (200 OK):**
 ```json
 [
   {
@@ -242,41 +201,34 @@ curl --location 'https://cloudylol-api.up.railway.app/stats/matches?team=G2%20Es
   }
 ]
 ```
-</details>
 
-#### <a name="get-recent-matches"></a>Get Recent Matches
+#### Get Recent Matches
 
 Returns a list of the most recent matches, sorted by date.
 
-<div class="endpoint">
-    <span class="endpoint-method get">GET</span>
-    <span class="endpoint-path">/stats/matches/recent</span>
-</div>
+`GET /stats/matches/recent`
 
 **Query Parameters:**
 
-| Name  | Type   | Required | Description                             |
-| :---- | :----- | :------- | :-------------------------------------- |
-| `limit` | number | No       | Number of matches to return. Default: 10. |
+| Name | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `limit` | number | No | Number of matches to return. Default: 10. |
 
 **Example Request:**
 ```bash
 curl --location 'https://cloudylol-api.up.railway.app/stats/matches/recent?limit=3'
 ```
 
-#### <a name="get-match-details-by-id"></a>Get Match Details by ID
+#### Get Match Details by ID
 
 Returns detailed, player-by-player data for a single match, identified by its unique `gameId`.
 
-<div class="endpoint">
-    <span class="endpoint-method get">GET</span>
-    <span class="endpoint-path">/stats/matches/{gameId}</span>
-</div>
+`GET /stats/matches/{gameId}`
 
 **Path Parameters:**
 
-| Name     | Type   | Description                                           |
-| :------- | :----- | :---------------------------------------------------- |
+| Name | Type | Description |
+| :--- | :--- | :--- |
 | `gameId` | string | The unique ID of the match. Example: `ESPORTSTMNT01_3335749`. |
 
 **Example Request:**
@@ -284,10 +236,8 @@ Returns detailed, player-by-player data for a single match, identified by its un
 curl --location 'https://cloudylol-api.up.railway.app/stats/matches/ESPORTSTMNT01_3335749'
 ```
 
-<details>
-<summary>Example Response (200 OK)</summary>
-<p>The response is an array containing an object for each player and a general object for each team in the match.</p>
-
+**Example Response (200 OK):**
+The response is an array containing an object for each player and a general object for each team in the match.
 ```json
 [
   {
@@ -316,18 +266,17 @@ curl --location 'https://cloudylol-api.up.railway.app/stats/matches/ESPORTSTMNT0
   }
 ]
 ```
-</details>
 
 ---
 
-## <a name="error-handling"></a>Error Handling
+## Error Handling
 
 The Cloudy LoL Stats API uses standard HTTP status codes to indicate the success or failure of a request.
 
--   **`200 OK`**: The request was successful.
--   **`404 Not Found`**: The requested resource could not be found. This typically occurs when fetching details for a `gameId` that does not exist.
--   **`422 Unprocessable Entity`**: The request was well-formed but contained validation errors (e.g., an incorrect data type for a parameter).
--   **`500 Internal Server Error`**: An unexpected error occurred on the server. If you encounter this error consistently, please let me know.
+-   `200 OK`: The request was successful.
+-   `404 Not Found`: The requested resource could not be found. This typically occurs when fetching details for a `gameId` that does not exist.
+-   `422 Unprocessable Entity`: The request was well-formed but contained validation errors (e.g., an incorrect data type for a parameter).
+-   `500 Internal Server Error`: An unexpected error occurred on the server. If you encounter this error consistently, please let me know.
 
 **Example Error Response (404 Not Found):**
 ```json
@@ -340,12 +289,8 @@ The Cloudy LoL Stats API uses standard HTTP status codes to indicate the success
 
 ---
 
-## <a name="support--feedback"></a>Support & Feedback
+## Support & Feedback
 
-I'm are always looking to improve! If you find a bug, have a feature request, or have a question, the best way to reach us is by sending me a dm on twitter.
+We are always looking to improve! If you find a bug, have a feature request, or have a question, the best way to reach us is by sending me a dm on twitter.
 
 -   **Twitter:** `https://x.com/Cloudylol19`
-
-</body>
-</html>
-```
